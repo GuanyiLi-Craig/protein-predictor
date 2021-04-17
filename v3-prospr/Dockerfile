@@ -12,7 +12,7 @@
 
 FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
 ENV LANG C.UTF-8
-
+ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 ADD protein_prodiction.ipynb /protein_prodiction.ipynb
 ADD pyrosetta-2020.50+release.1295438cd4b-cp36-cp36m-linux_x86_64.whl /tmp/pyrosetta-2020.50+release.1295438cd4b-cp36-cp36m-linux_x86_64.whl
 
