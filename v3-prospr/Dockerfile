@@ -80,35 +80,19 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         matplotlib \
         Cython \
         tqdm \
-        && \
-
-# ==================================================================
-# torch
-# ------------------------------------------------------------------
-
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
-        sudo \
-        && \
-
-    $GIT_CLONE https://github.com/nagadomi/distro.git ~/torch --recursive && \
-    cd ~/torch && \
-    bash install-deps && \
-    sed -i 's/${THIS_DIR}\/install/\/usr\/local/g' ./install.sh && \
-    ./install.sh && \
 
 # ==================================================================
 # jupyter
 # ------------------------------------------------------------------
 
-    $PIP_INSTALL \
+RUN python -m pip --no-cache-dir install \
         jupyter \
-        && \
 
 # ==================================================================
 # pytorch
 # ------------------------------------------------------------------
 
-    $PIP_INSTALL \
+RUN python -m pip --no-cache-dir install \
         future \
         numpy \
         protobuf \
@@ -116,35 +100,31 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         pyyaml \
         typing \
         && \
-    $PIP_INSTALL \
+    python -m pip --no-cache-dir install \
         --pre torch torchvision -f \
         https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html \
-        && \
 
 # ==================================================================
 # tensorflow
 # ------------------------------------------------------------------
 
-    $PIP_INSTALL \
+RUN python -m pip --no-cache-dir install \
         tensorflow-gpu \
-        && \
 
 # ==================================================================
 # jupyterlab
 # ------------------------------------------------------------------
 
-    $PIP_INSTALL \
+RUN python -m pip --no-cache-dir install \
         jupyterlab \
-        && \
 
 # ==================================================================
 # keras
 # ------------------------------------------------------------------
 
-    $PIP_INSTALL \
+RUN python -m pip --no-cache-dir install \
         h5py \
         keras \
-        && \
 
 # ==================================================================
 # Get Prospr
