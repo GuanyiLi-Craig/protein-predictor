@@ -13,7 +13,6 @@
 FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
 ENV LANG C.UTF-8
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
-ADD protein_prodiction.ipynb /protein_prodiction.ipynb
 ADD pyrosetta-2020.50+release.1295438cd4b-cp36-cp36m-linux_x86_64.whl /tmp/pyrosetta-2020.50+release.1295438cd4b-cp36-cp36m-linux_x86_64.whl
 
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
@@ -126,14 +125,28 @@ RUN python -m pip --no-cache-dir install \
         keras
 
 # ==================================================================
+# hhsuit
+# ------------------------------------------------------------------
+
+RUN git clone https://github.com/soedinglab/hh-suite.git
+RUN apt-get install -y --no-install-recommends \
+          cmake \
+          liboctave-dev
+
+RUN mkdir -p /hh-suite/build
+
+RUN cd /hh-suite/build && \
+    cmake -DCMAKE_INSTALL_PREFIX=. .. && \
+    make -j 4 && make install && \
+    export PATH="/hh-suite/build/bin:/hh-suite/build/scripts:$PATH"
+
+# ==================================================================
 # Get Prospr
 # ------------------------------------------------------------------
 RUN cd /
 RUN mkdir predictor
-RUN cd predictor
-
+ADD protein_predictor.ipynb /predictor/protein_predictor.ipynb
 RUN git clone https://github.com/dellacortelab/prospr.git
-RUN mv /protein_prodiction.ipynb .
 
 # ==================================================================
 # generate pdb data
