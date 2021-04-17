@@ -1,4 +1,4 @@
-#Prospr Protein Predictor
+# Prospr Protein Predictor
 ## Build Docker Image
 
 ```bash
