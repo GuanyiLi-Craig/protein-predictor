@@ -79,14 +79,14 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         scikit-learn \
         matplotlib \
         Cython \
-        tqdm \
+        tqdm
 
 # ==================================================================
 # jupyter
 # ------------------------------------------------------------------
 
 RUN python -m pip --no-cache-dir install \
-        jupyter \
+        jupyter
 
 # ==================================================================
 # pytorch
@@ -102,29 +102,28 @@ RUN python -m pip --no-cache-dir install \
         && \
     python -m pip --no-cache-dir install \
         --pre torch torchvision -f \
-        https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html \
+        https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html
 
 # ==================================================================
 # tensorflow
 # ------------------------------------------------------------------
 
 RUN python -m pip --no-cache-dir install \
-        tensorflow-gpu \
+        tensorflow-gpu
 
 # ==================================================================
 # jupyterlab
 # ------------------------------------------------------------------
 
 RUN python -m pip --no-cache-dir install \
-        jupyterlab \
+        jupyterlab
 
 # ==================================================================
 # keras
 # ------------------------------------------------------------------
 
 RUN python -m pip --no-cache-dir install \
-        h5py \
-        keras \
+        keras
 
 # ==================================================================
 # Get Prospr
