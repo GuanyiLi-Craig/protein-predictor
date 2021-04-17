@@ -129,12 +129,11 @@ RUN python -m pip --no-cache-dir install \
 # Get Prospr
 # ------------------------------------------------------------------
 RUN cd /
+RUN mkdir predictor
+RUN cd predictor
 
 RUN git clone https://github.com/dellacortelab/prospr.git
-
-# ==================================================================
-# alphafold pipeline
-# ------------------------------------------------------------------
+RUN mv /protein_prodiction.ipynb .
 
 # ==================================================================
 # generate pdb data
