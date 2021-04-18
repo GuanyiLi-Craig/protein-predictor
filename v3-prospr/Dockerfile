@@ -137,15 +137,14 @@ RUN mkdir -p /hh-suite/build
 
 RUN cd /hh-suite/build && \
     cmake -DCMAKE_INSTALL_PREFIX=. .. && \
-    make -j 4 && make install && \
-    export PATH="/hh-suite/build/bin:/hh-suite/build/scripts:$PATH"
+    make -j 4 && make install
+    
+ENV PATH "$PATH='/hh-suite/build/bin:/hh-suite/build/scripts:$PATH'"
 
 # ==================================================================
 # Get Prospr
 # ------------------------------------------------------------------
 RUN cd /
-RUN mkdir predictor
-ADD protein_predictor.ipynb /predictor/protein_predictor.ipynb
 RUN git clone https://github.com/dellacortelab/prospr.git
 
 # ==================================================================
