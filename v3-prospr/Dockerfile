@@ -8,6 +8,8 @@
 # tensorflow    latest (pip)
 # jupyterlab    latest (pip)
 # keras         latest (pip)
+# pymol         latest (pip)
+# pyrosetta     2020.50 package
 # ==================================================================
 
 FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
@@ -125,6 +127,19 @@ RUN python -m pip --no-cache-dir install \
         keras
 
 # ==================================================================
+# pymol
+# ------------------------------------------------------------------
+
+RUN apt-get install -y --no-install-recommends \
+        pymol
+
+# ==================================================================
+# pyrosetta
+# ------------------------------------------------------------------
+RUN python -m pip install \
+        /tmp/pyrosetta-2020.50+release.1295438cd4b-cp36-cp36m-linux_x86_64.whl
+
+# ==================================================================
 # hhsuit
 # ------------------------------------------------------------------
 
@@ -137,34 +152,20 @@ RUN mkdir -p /hh-suite/build
 
 RUN cd /hh-suite/build && \
     cmake -DCMAKE_INSTALL_PREFIX=. .. && \
-    make -j 4 && make install && \
-    export PATH="/hh-suite/build/bin:/hh-suite/build/scripts:$PATH"
+    make -j 4 && make install
+    
+ENV PATH "$PATH=/hh-suite/build/bin:/hh-suite/build/scripts:$PATH"
 
 # ==================================================================
 # Get Prospr
 # ------------------------------------------------------------------
 RUN cd /
-RUN mkdir predictor
-ADD protein_predictor.ipynb /predictor/protein_predictor.ipynb
 RUN git clone https://github.com/dellacortelab/prospr.git
 
 # ==================================================================
 # generate pdb data
 # ------------------------------------------------------------------
 RUN git clone https://github.com/leklab/alphafoldv1.git
-
-# ==================================================================
-# pymol
-# ------------------------------------------------------------------
-
-RUN apt-get install -y --no-install-recommends \
-        pymol
-
-# ==================================================================
-# pyrosetta
-# ------------------------------------------------------------------
-RUN python -m pip install \
-        /tmp/pyrosetta-2020.50+release.1295438cd4b-cp36-cp36m-linux_x86_64.whl
 
 # ==================================================================
 # config & cleanup
